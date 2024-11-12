@@ -1,13 +1,45 @@
 #include <iostream>
 #include <cstring>
-#include <unistd.h>  //for close()
-#include <sys/socket.h> //for socket(), bind(), listen(), accept()
-#include <netinet/in.h> //for identify adress
+
+#ifdef _WIN32
+    #include <winsock2.h>
+    #include <ws2tcpip.h>//for socket operations
+    #pragma comment(lib, "ws2_32.lib") //for identify adress
+#else
+    #include <unistd.h>  //for close()
+    #include <sys/socket.h> //for socket(), bind(), listen(), accept()
+    #include <netinet/in.h> //for identify adress
+#endif
+
+//Initialization (for windows)
+void initSockets() {
+#ifdef _WIN32
+    WSADATA wsaData;
+    int init = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (init < 0) {
+        std::cerr << "Init error" << endl;
+    }
+#endif
+}
+
+void closeSocket_(int socket) {
+    #ifdef _WIN32
+        closesocket(socket);
+    #else
+        close(socket);
+    #endif
+}
+
+
+
 
 
 using namespace std;
 
 int main(){
+    //Initialization (for windows)
+    initSockets();
+
     //Create socket
     //AF_INET - specified type of adress like IPv4, SOCK_STEAM - defines type of socket like stream socket, 0 - defines type of protocol like default (TCP)
     int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -62,8 +94,8 @@ int main(){
 
 
     //Close connection
-    close(clientSocket);
-    close(serverSocket);
+    closeSocket_(clientSocket);
+    closeSocket_(serverSocket);
 
   return 0;
 }
