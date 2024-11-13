@@ -1,18 +1,20 @@
 OS := $(shell uname)
 
-output: main.o
 ifeq ($(OS), Linux)
-	g++ main.o -o output
+	SOURCES = main.cpp linux_sockets.cpp
+	LIBS =
 else
-	g++ main.o -o output -lws2_32
+	SOURCES = main.cpp windows_sockets.cpp
+	LIBS = -lws2_32
 endif
 
-main.o: main.cpp
-	g++ -c main.cpp
+output: $(SOURCES)
+	g++ $(SOURCES) -o output $(LIBS)
 
-clear:
+clean:
 ifeq ($(OS), Linux)
 	rm -f *.o output
 else
-	del /F *.o output.exe
+	del output.exe
 endif
+
