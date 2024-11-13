@@ -5,6 +5,8 @@
 #include <ws2tcpip.h>//for socket operations
 #pragma comment(lib, "ws2_32.lib") //for identify adress
 
+using namespace std;
+
 void initSockets_(){
     WSADATA wsaData;
     int init = WSAStartup(MAKEWORD(2, 2), &wsaData);
