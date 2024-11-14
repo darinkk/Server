@@ -10,7 +10,7 @@ int main(){
     //Initialization (for windows)
     server->initSockets_();
     server->createSocket_();
-    server->defineServerAddress_(12345);
+    server->defineServerAddress_(8888);
     server->bindSocket_();
     server->listenSocket_(5);
     server->acceptSocket_();
