@@ -1,10 +1,10 @@
 OS := $(shell uname)
 
 ifeq ($(OS), Linux)
-	SOURCES = main.cpp linux_sockets.cpp
+	SOURCES = main.cpp server_linux.cpp server.cpp
 	LIBS =
 else
-	SOURCES = main.cpp windows_sockets.cpp
+	SOURCES = main.cpp server_windows.cpp server.cpp
 	LIBS = -lws2_32
 endif
 
