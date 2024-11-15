@@ -21,7 +21,7 @@ void ServerWindows::createSocket_(){
     setServerSocket_(newSocket);
 }
 
-void ServerServerWindowsLinux::defineServerAddress_(int port){
+void ServerWindows::defineServerAddress_(int port){
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = INADDR_ANY; //INADDR_ANY make socket listen all avalible IPs
     serverAddress.sin_port = htons(port); //define server port
