@@ -22,3 +22,16 @@ Server* Server::createServer_(){
     return nullptr;
   #endif
 }
+
+void Server::startServer_(int port){
+  initSockets_();
+  createSocket_();
+  defineServerAddress_(port);
+  bindSocket_();
+  listenSocket_(5);
+  acceptSocket_();
+  int messageLenth = getMessage_();
+  sendMessage_(messageLenth);
+  closeSockets_();
+}
+

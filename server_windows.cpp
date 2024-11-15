@@ -14,8 +14,9 @@ void ServerWindows::initSockets_(){
 }
 
 void ServerWindows::createSocket_(){
-    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if(serverSocket < 0){
+    int newSocket = socket(AF_INET, SOCK_STREAM, 0);
+    setServerSocket_(newSocket);
+    if(getServerSocket_() < 0){
         cerr << "Create socket error" << endl;
     }
 }
@@ -27,14 +28,14 @@ void ServerServerWindowsLinux::defineServerAddress_(int port){
 }
 
 void ServerWindows::bindSocket_(){
-    int bindSocket = bind(serverSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
+    int bindSocket = bind(getServerSocket_(), (struct sockaddr*)&serverAddress, sizeof(serverAddress));
     if(bindSocket < 0){
         cerr << "Bind socket error" << endl;
     }
 }
 
 void ServerWindows::listenSocket_(int numOfConnect){
-    int listener = listen(serverSocket, numOfConnect); //numOfConnect is max value of connections can be in line
+    int listener = listen(getServerSocket_(), numOfConnect); //numOfConnect is max value of connections can be in line
     if(listener < 0){
         cerr << "Listen error" << endl;
     }
@@ -42,31 +43,32 @@ void ServerWindows::listenSocket_(int numOfConnect){
 }
 
 void ServerWindows::acceptSocket_(){
-    clientSocket = accept(serverSocket,nullptr,nullptr);
-    if(clientSocket < 0){
+    int newSocket = accept(getServerSocket_(),nullptr,nullptr);
+    setClientSocket_(newSocket);
+    if(getClientSocket_() < 0){
         cerr << "Connecting error" << endl;
     }
     cout << "Client connected!" << endl;
 }
 
 int ServerWindows::getMessage_(){
-    int messageLenth = recv(clientSocket, buffer, sizeof(buffer),0);
+    int messageLenth = recv(getClientSocket_(), getBuffer_(), getBufferSize_(),0);
     if(messageLenth  < 0){
         cerr << "Getting error" << endl;
         return -1;
     }
-    cout << "Server got messaage: " << buffer << endl;
+    cout << "Server got messaage: " << getBuffer_() << endl;
     return messageLenth;
 }
 
 void ServerWindows::sendMessage_(int messageLenth){
-    int send_ = send(clientSocket,buffer,messageLenth,0);
+    int send_ = send(getClientSocket_(),getBuffer_(),messageLenth,0);
     if(send_  < 0){
         cerr << "Sending error" << endl;
     }   
 }
 
 void ServerWindows::closeSocket_(){
-  closesocket(clientSocket);
-  closesocket(serverSocket);
+  closesocket(getClientSocket_());
+  closesocket(getServerSocket_());
 }

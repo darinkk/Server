@@ -4,6 +4,16 @@
 class Server{
 public:
   Server();
+  static Server* createServer_();
+  void startServer_(int port);
+  int getServerSocket_(){return serverSocket;}
+  void setServerSocket_(int newSerSock){serverSocket = newSerSock;}
+  int getClientSocket_(){return clientSocket;}
+  void setClientSocket_(int newCliSock){clientSocket = newCliSock;}
+  char* getBuffer_(){return buffer;}
+  int getBufferSize_(){return sizeof(buffer);}
+  
+private:
   virtual void initSockets_() = 0;
   virtual void createSocket_() = 0;
   virtual void defineServerAddress_(int port) = 0;
@@ -13,9 +23,7 @@ public:
   virtual int getMessage_() = 0;
   virtual void sendMessage_(int messageLenth) = 0;
   virtual void closeSockets_() = 0;
-  static Server* createServer_();
-  
-protected:
+
   char buffer[1024];
   int serverSocket;
   int clientSocket;
