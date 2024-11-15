@@ -6,7 +6,6 @@
 #include "server.h"
 
 class ServerWindows : public Server{
-//private:
   virtual void initSockets_() override;
   virtual void createSocket_() override;
   virtual void defineServerAddress_(int port) override;

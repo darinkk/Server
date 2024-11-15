@@ -28,10 +28,10 @@ void Server::startServer_(int port){
   createSocket_();
   defineServerAddress_(port);
   bindSocket_();
-  listenSocket_(5);
+  listenSocket_(3);
   acceptSocket_();
-  int messageLenth = getMessage_();
-  sendMessage_(messageLenth);
+  int messageLenght = getMessage_();
+  sendMessage_(messageLenght);
   closeSockets_();
 }
 

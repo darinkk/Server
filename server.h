@@ -4,8 +4,10 @@
 class Server{
 public:
   Server();
+  ~Server();
   static Server* createServer_();
   void startServer_(int port);
+  void stopServer() {closeSockets_();}
   int getServerSocket_(){return serverSocket;}
   void setServerSocket_(int newSerSock){serverSocket = newSerSock;}
   int getClientSocket_(){return clientSocket;}

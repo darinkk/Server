@@ -7,7 +7,6 @@
 #include "server.h"
     
 class ServerLinux : public Server{
-//private:
   virtual void initSockets_() override;
   virtual void createSocket_() override;
   virtual void defineServerAddress_(int port) override;

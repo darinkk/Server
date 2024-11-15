@@ -9,16 +9,16 @@ void ServerWindows::initSockets_(){
     WSADATA wsaData;
     int init = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (init < 0) {
-        std::cerr << "Init error" << endl;
+        cerr << "Init error" << endl;
     }
 }
 
 void ServerWindows::createSocket_(){
     int newSocket = socket(AF_INET, SOCK_STREAM, 0);
-    setServerSocket_(newSocket);
-    if(getServerSocket_() < 0){
+    if(newSocket < 0){
         cerr << "Create socket error" << endl;
     }
+    setServerSocket_(newSocket);
 }
 
 void ServerServerWindowsLinux::defineServerAddress_(int port){

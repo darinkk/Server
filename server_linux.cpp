@@ -1,7 +1,5 @@
 #include "server_linux.h"
 #include <iostream>
-#include <cerrno>
-#include <cstring>
 
 using namespace std;
 
@@ -9,23 +7,24 @@ void ServerLinux::initSockets_(){ }
 
 void ServerLinux::createSocket_(){
     int newSocket = socket(AF_INET, SOCK_STREAM, 0);
-    setServerSocket_(newSocket);
-    if(getServerSocket_() < 0){
+    if(newSocket < 0){
         cerr << "Create socket error" << endl;
     }
+    setServerSocket_(newSocket);
 }
 
 void ServerLinux::defineServerAddress_(int port){
     serverAddress.sin_family = AF_INET;
-    serverAddress.sin_addr.s_addr = INADDR_ANY; //INADDR_ANY make socket listen all avalible IPs
+    serverAddress.sin_addr.s_addr = INADDR_ANY; //INADDR_ANY make socket listen all avalible IPs 
     serverAddress.sin_port = htons(port); //define server port
 }
 
 void ServerLinux::bindSocket_(){
     int bindSocket = bind(getServerSocket_(), (struct sockaddr*)&serverAddress, sizeof(serverAddress));
     if(bindSocket < 0){
-        cerr << "Bind socket error" << strerror(errno) << endl;
+        cerr << "Bind socket error" << endl;
     }
+
 }
 
 void ServerLinux::listenSocket_(int numOfConnect){
