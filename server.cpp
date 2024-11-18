@@ -2,21 +2,22 @@
 #include <iostream>
 #ifdef __linux__
   #include "server_linux.h"
-#elif
+#elif _WIN32
   #include "server_windows.h"
 #else
 #endif
 
+using namespace std;
+
 Server::Server(){
-  std::fill(buffer, buffer+1024,0);
+  fill(buffer, buffer+1024,0);
   serverSocket = -1;
-  clientSocket = -1;
 }
 
 Server* Server::createServer_(){
   #ifdef __linux__
     return new ServerLinux;
-  #elif
+  #elif _WIN32
     return new ServerWindows;
   #else
     return nullptr;
@@ -29,9 +30,9 @@ void Server::startServer_(int port){
   defineServerAddress_(port);
   bindSocket_();
   listenSocket_(3);
-  acceptSocket_();
-  int messageLenght = getMessage_();
-  sendMessage_(messageLenght);
-  closeSockets_();
+  madeUnblock_(serverSocket);
+  handleClient_();
 }
+
+
 
