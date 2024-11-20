@@ -68,7 +68,7 @@ void ServerWindows::sendMessage_(int messageLenth){
     }   
 }
 
-void ServerWindows::closeSocket_(){
+void ServerWindows::closeSockets_(){
   closesocket(getClientSocket_());
   closesocket(getServerSocket_());
 }
