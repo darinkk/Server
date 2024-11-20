@@ -12,11 +12,12 @@ public:
   void stopServer() {closeSockets_();}
   int getServerSocket_(){return serverSocket;}
   void setServerSocket_(int newSerSock){serverSocket = newSerSock;}
-  std::vector<int> getClientSockets_(){return clientSockets;} //New
+  std::vector<int> &getClientSockets_(){return clientSockets;} //New
   void setClientSocket_(int newCliSock){clientSockets.push_back(newCliSock);} //Chenged
   char* getBuffer_(){return buffer;}
   int getBufferSize_(){return sizeof(buffer);}
   void cleanBuffer_(){std::fill(buffer, buffer+1024,0);} 
+  void cleanClientSockets_(){clientSockets.clear();}
   
 private:
   virtual void initSockets_() = 0;

@@ -10,8 +10,9 @@
 using namespace std;
 
 Server::Server(){
-  fill(buffer, buffer+1024,0);
-  serverSocket = -1;
+  //fill(buffer, buffer+1024,0);
+  cleanBuffer_();
+  cleanClientSockets_();
 }
 
 Server* Server::createServer_(){
@@ -31,8 +32,11 @@ void Server::startServer_(int port){
   bindSocket_();
   listenSocket_(3);
   madeUnblock_(serverSocket);
+  //while(clientSockets.size() > 0){handleClient_();}
   handleClient_();
-}
+  }
+
+  
 
 
 
